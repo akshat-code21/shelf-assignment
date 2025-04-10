@@ -3,34 +3,38 @@ import { prisma } from "../db/index"
 import jwt from "jsonwebtoken"
 import { JWT_SECRET } from "../config"
 export const signup = async (req: Request, res: Response) => {
-    const { name, email, password, mobile } = req.body;
+    const { name, email, password, mobile, role } = req.body;
     await prisma.users.create({
         data: {
-            name, email, password, mobile
+            name, email, password, mobile, role
         }
     })
     res.json({
-        message : "User successfully signed up."
+        message: "User successfully signed up."
     })
 }
-export const signin = async(req:Request,res:Response) => {
-    const {email,password} = req.body;
+export const signin = async (req: Request, res: Response) => {
+    const { email, password } = req.body;
     const user = await prisma.users.findFirst({
-        where:{
+        where: {
             email
         }
     })
-    if(!user){
+    if (!user) {
         res.json({
-            message : "User not found"
+            message: "User not found"
         })
         return;
     }
     const token = jwt.sign({
         id: user.id
     }, JWT_SECRET as string)
+    res.cookie('token', token, {
+        httpOnly: true,
+        sameSite: 'lax'
+    })
     res.json({
-        message : "User successfully signed in.",
+        message: "User successfully signed in.",
         token
     })
 }

@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../config";
 import { prisma } from "../db";
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers.authorization;
+    const token = req.cookies.token;
     if (!token) {
         res.status(401).json({ message: "Unauthorized" });
         return;
