@@ -5,7 +5,7 @@ dist
 out
 dist
 *.tgz
-
+/src/generated/prisma/
 # code coverage
 coverage
 *.lcov

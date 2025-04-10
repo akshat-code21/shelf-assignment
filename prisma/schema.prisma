@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id       String   @id @default(uuid())
+  name     String
+  email    String   @unique
+  password String
+  mobile   String
+  role     UserRole @default(USER)
+  books    Book[]   @relation("UserBooks")
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+model Book {
+  id       String     @id @default(uuid())
+  title    String
+  author   String
+  genre    String?
+  location String?
+  ownerId  String
+  owner    Users      @relation("UserBooks", fields: [ownerId], references: [id])
+  contact  String
+  status   BookStatus @default(AVAILABLE)
+}
+
+enum BookStatus {
+  AVAILABLE
+  UNAVAILABLE
+}
