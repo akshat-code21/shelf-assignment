@@ -2,7 +2,15 @@ import { prisma } from "../db";
 import type { Request, Response } from "express";
 
 export const getBooks = async (req: Request, res: Response) => {
-    const books = await prisma.book.findMany();
+    const books = await prisma.book.findMany({
+        include: {
+            owner: {
+                select: {
+                    name: true
+                }
+            }
+        }
+    });
     res.json(books);
 }
 export const getBookById = async (req: Request, res: Response) => {
