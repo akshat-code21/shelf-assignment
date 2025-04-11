@@ -18,7 +18,9 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
     exposedHeaders: ['Set-Cookie']
 }));
-
+app.get('/', (req, res) => {
+    res.send('Hello World');
+});
 app.use('/api/auth', authRouter);
 app.use('/api/books', bookRouter);
 app.use('/api/users', userRouter);
