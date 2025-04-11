@@ -34,24 +34,33 @@ export const signin = async (req: Request, res: Response) => {
             })
             return;
         }
+        
+        
         const token = jwt.sign({
             id: user.id
-        }, JWT_SECRET as string)
-        res.cookie('token', token, {
+        }, JWT_SECRET as string);
+        
+        
+        // Set cookie with proper attributes
+        const cookieOptions = {
             httpOnly: true,
-            secure: false,
-            sameSite: 'none',
+            secure: false, // Set to false for development
+            sameSite: 'lax' as const,
+            path: '/',
             maxAge: 24 * 60 * 60 * 1000
-        })
+        };
+        
+        res.cookie('token', token, cookieOptions);
+                
         res.json({
             message: "User successfully signed in.",
-            token
-        })
+        });
     } catch (error) {
         console.error('Signin error:', error);
         res.status(500).json({ message: 'Error signing in' });
     }
 }
+
 export const logout = async (req: Request, res: Response) => {
     res.clearCookie('token', {
         httpOnly: true,

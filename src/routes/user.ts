@@ -12,7 +12,7 @@ userRouter.get('/me', async (req: Request, res: Response) => {
             where: {
                 id: req.userId
             }
-        });
+        });        
 
         if (!user) {
             res.status(404).json({ message: 'User not found' });
@@ -21,7 +21,6 @@ userRouter.get('/me', async (req: Request, res: Response) => {
 
         res.json(user);
     } catch (error) {
-        console.error('Error finding user:', error);
         res.status(500).json({ message: 'Error finding user' });
     }
 });
