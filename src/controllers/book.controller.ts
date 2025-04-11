@@ -20,7 +20,7 @@ export const createBook = async (req: Request, res: Response) => {
     const book = await prisma.book.create({
         data: { title, author, genre, location, contact, status, ownerId: req.userId as string }
     })
-    res.json(book);
+    res.json({book});
 }
 export const updateBook = async (req: Request, res: Response) => {
     const { title, author, genre, location, contact, status } = req.body;
