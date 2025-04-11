@@ -7,10 +7,18 @@ import userRouter from "./routes/user";
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
-app.use('/api/auth',authRouter);
-app.use('/api/books',bookRouter);
-app.use('/api/users',userRouter);
-app.listen(3001,()=>{
+
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
+
+app.use('/api/auth', authRouter);
+app.use('/api/books', bookRouter);
+app.use('/api/users', userRouter);
+
+app.listen(3001, () => {
     console.log("Server up on port 3001");
-})
+}).on('error', (err) => {
+    console.error('Server error:', err);
+});

@@ -1,1 +1,1 @@
-export const JWT_SECRET = process.env.DATABASE_URL
+export const JWT_SECRET = process.env.JWT_SECRET;
