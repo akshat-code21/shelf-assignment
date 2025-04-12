@@ -1,4 +1,4 @@
-# Shelf - Book Sharing API
+# BookSwap - Book Sharing API
 
 A RESTful API for a book sharing platform built with Express.js, Prisma, and PostgreSQL.
 
